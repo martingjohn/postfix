@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z "$(ls -A /etc/postfix)" ]
+then
+        cp -Rp /orig/postfix/* /etc/postfix/
+fi
+
+cp /etc/resolv.conf /var/spool/postfix/etc/resolv.conf
+
+[[ -n $mydomain ]] && postconf -e "mydomain = $mydomain"
+
+exec /usr/lib/postfix/sbin/master -d -c /etc/postfix
