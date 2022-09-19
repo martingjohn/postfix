@@ -1,0 +1,13 @@
+POSTCONF_mydestination=$myhostname, localhost.$mydomain, localhost,smtp1.home, localhost.home
+POSTCONF_mydomain=imph.co.uk
+POSTCONF_myhostname=smtp1.imph.co.uk
+POSTCONF_mynetworks_style=subnet
+POSTCONF_relayhost=
+POSTCONF_smtp_sasl_auth_enable=yes
+POSTCONF_smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd
+POSTCONF_smtp_sasl_security_options=noanonymous
+POSTCONF_smtp_tls_security_level=may
+POSTCONF_transport_maps=hash:/etc/postfix/transport
+POSTCONF_smtpd_relay_restrictions=permit_mynetworks, permit_sasl_authenticated, defer_unauth_destination
+POSTCONF_inet_protocols=ipv4
+
