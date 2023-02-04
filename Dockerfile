@@ -1,10 +1,14 @@
 ARG FROM_VER
 FROM alpine:${FROM_VER:-3.16.2}
 
-RUN apk add --no-cache \
-        bash \
-        postfix
+COPY requirements.apk requirements.apk
+RUN xargs apk add --no-cache < requirements.apk
 
 WORKDIR /app
 COPY entrypoint.sh /app/entrypoint.sh
-CMD sleep inf
+#CMD sleep inf
+EXPOSE 25
+VOLUME /var/spool/postfix
+VOLUME /var/mail
+
+CMD /app/entrypoint.sh

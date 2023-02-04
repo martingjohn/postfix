@@ -1,6 +1,24 @@
 #!/bin/bash
 
 IFS=$(echo -en "\n\b")
+
+for i in $(env | grep POSTMAP_ | sort)
+do
+	i=${i#POSTMAP_}
+	J=$(eval echo ${i#*=})
+	I=${i,,}
+	I=${I%=*}
+	if [[ -f $J ]]
+	then
+		echo cp $J /etc/postfix/$I
+		cp $J /etc/postfix/$I
+		chown root:root /etc/postfix/$I
+		chmod 600 /etc/postfix/$I
+		echo Making map of $I
+		postmap /etc/postfix/$I
+	fi
+done
+
 for i in $(env | grep POSTCONF_ | sort)
 do
 	i=${i#POSTCONF_}
@@ -9,13 +27,7 @@ do
 	postconf -e $i
 done
 
-if [[ "x$POSTFIX_SASL_PASSWD" -ne "x" ]]
-then
-	cp ${POSTFIX_SASL_PASSWD} /etc/postfix/sasl_passwd
-	chown root:root /etc/postfix/sasl_passwd
-	chmod 600 /etc/postfix/sasl_passwd
-	postmap /etc/postfix/sasl_passwd
-fi
+#Set logging to stdout
+postconf -e maillog_file=/dev/stdout
 
-
-#postfix start-fg
+postfix start-fg

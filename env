@@ -10,4 +10,8 @@ POSTCONF_smtp_tls_security_level=may
 POSTCONF_transport_maps=hash:/etc/postfix/transport
 POSTCONF_smtpd_relay_restrictions=permit_mynetworks, permit_sasl_authenticated, defer_unauth_destination
 POSTCONF_inet_protocols=ipv4
-
+#
+FILE_MOUNT=/opt
+POSTMAP_SASL_PASSWD=${FILE_MOUNT}/sasl_passwd
+POSTMAP_TRANSPORT=${FILE_MOUNT}/transport
+#POSTMAP_ALIASES=${FILE_MOUNT}/aliases
